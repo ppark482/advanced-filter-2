@@ -1,0 +1,25 @@
+{
+  "name": "advanced-filter-2",
+  "version": "2.0.0",
+  "main": "advanced-filter-2.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.0.1",
+    "star-rating": "acordeonl/star-rating#^2.0.6",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
+    "iron-selector": "PolymerElements/iron-selector#^2.0.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.1",
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "iron-dropdown": "PolymerElements/iron-dropdown#^2.0.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0",
+    "lodash": "^4.17.4"
+  }
+}
