@@ -266,12 +266,12 @@
                 white-space: nowrap;
             }
 
-            #appliedFilters .listed-filters star-ratings ::content iron-icon {
+            #appliedFilters .listed-filters star-rating ::content iron-icon {
                 width: 16px;
                 height: 16px;
             }
 
-            .star-container iron-selector div.iron-selected star-ratings ::content iron-icon {
+            .star-container iron-selector div.iron-selected star-rating ::content iron-icon {
                 color: gold;
             }
 
@@ -316,7 +316,7 @@
                             </div>
 
                             <div hidden$="[[!list.typeStar]]" class="listed-filters" data-id$="[[list.id]]" data-name$="[[selected]]" data-index$="[[selected_no]]" style="min-width: 105px; width: 105px; max-width: 105px;">
-                                <star-rating active-stars="[[selected]]"></star-rating>
+                                <star-rating rate="[[selected]]" read-only="true"></star-rating>
                                 <iron-icon icon="icons:close" on-click="removeFilter"></iron-icon>
                             </div>
 
@@ -365,14 +365,12 @@
                                     <h4>[[filter.title]]</h4>
                                     <iron-selector id="[[filter.id]]" multi="true" attr-for-selected="name">
                                         <template is="dom-repeat" items="[[filter.list]]" as="listed" index-as="listed_no">
-                                            <div name="[[listed]]"><star-ratings active-stars='[[listed]]'></star-ratings></div>
+                                            <div name="[[listed]]"><star-rating rate='[[listed]]' read-only="true"></star-rating></div>
                                         </template>
                                     </iron-selector>
                                 </div>
                             </template>
-
                         </template>
-
                     </div>
                     <div class="filter-buttons">
                         <div style="@apply --layout-flex"></div>
