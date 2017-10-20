@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/utils/async.html">
 
 <link rel="import" href="../iron-icons/iron-icons.html"/>
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
@@ -9,7 +10,8 @@
 <link rel="import" href="../iron-dropdown/iron-dropdown.html"/>
 <link rel="import" href="../iron-iconset-svg/iron-iconset-svg.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../star-rating/star-rating.html">
+<!-- <link rel="import" href="../star-rating/star-rating.html"> -->
+<link rel="import" href="../l2t-paper-rating/l2t-paper-rating.html">
 
 <script src="../lodash/dist/lodash.min.js"></script>
 <!--
@@ -266,15 +268,6 @@
                 white-space: nowrap;
             }
 
-            #appliedFilters .listed-filters star-rating ::content iron-icon {
-                width: 16px;
-                height: 16px;
-            }
-
-            .star-container iron-selector div.iron-selected star-rating ::content iron-icon {
-                color: gold;
-            }
-
             .filter-container {
                 min-width: 190px;
                 @apply --layout-flex;
@@ -283,6 +276,13 @@
 
             .dropdown-trigger {
                 @apply --layout-horizontal;
+            }
+
+            .iron-selected > l2t-paper-rating {
+                --rating-icon-color: gold;
+            }
+            l2t-paper-rating.iron-selected {
+                --rating-icon-color: gold;
             }
         </style>
         <div class="table-filters">
@@ -316,7 +316,7 @@
                             </div>
 
                             <div hidden$="[[!list.typeStar]]" class="listed-filters" data-id$="[[list.id]]" data-name$="[[selected]]" data-index$="[[selected_no]]" style="min-width: 105px; width: 105px; max-width: 105px;">
-                                <star-rating rate="[[selected]]" read-only="true"></star-rating>
+                                <l2t-paper-rating rating="[[selected]]" readonly></l2t-paper-rating>
                                 <iron-icon icon="icons:close" on-click="removeFilter"></iron-icon>
                             </div>
 
@@ -360,20 +360,21 @@
                                 </div>
                             </template>
 
-                            <template is="dom-if" if="[[filter.typeStar]]">
+<!--                             <template is="dom-if" if="[[filter.typeStar]]">
                                 <div class="filter-wrap star-container">
                                     <h4>[[filter.title]]</h4>
                                     <iron-selector id="[[filter.id]]" multi="true" attr-for-selected="name">
                                         <template is="dom-repeat" items="[[filter.list]]" as="listed" index-as="listed_no">
-                                            <div name="[[listed]]"><star-rating rate='[[listed]]' read-only="true"></star-rating></div>
+                                            <div name="[[listed]]">
+                                                <l2t-paper-rating name="[[listed]]" rating="[[listed]]" readonly></l2t-paper-rating>
+                                            </div>
                                         </template>
                                     </iron-selector>
                                 </div>
-                            </template>
+                            </template> -->
                         </template>
                     </div>
                     <div class="filter-buttons">
-                        <div style="@apply --layout-flex"></div>
                         <paper-button class="black-button" on-click="setApply">Apply Filters</paper-button>
                         <paper-button  on-click="cancelApply">Cancel</paper-button>
                     </div>
@@ -409,6 +410,11 @@
                     filterList: {
                         type: Array,
                         value: [],
+                        notify: true
+                    },
+                    selectedRating: {
+                        type: String,
+                        value: '',
                         notify: true
                     }
                 };
@@ -446,7 +452,7 @@
             _cleanFilters(list) {
                 return _.forEach(list, function(x) {
 
-                    if (x.typeCheck && x.list.length > 10) {
+                    if (x.typeCheck && x.list && x.list.length > 10) {
                         x.typeCheck = false;
                         x.typeScroll = true;
                     }
@@ -502,7 +508,6 @@
                         self._elGetByIdOf(list).select(sv);
                     });
                 }
-
             }
 
             closeFilters() {
@@ -545,22 +550,22 @@
 
             setApply() {
                 var self = this;
+                // Polymer.Async.microTask.run(() => {
+                    _.forEach(this.filterList, function(list, i) {
+                        var tmp = self.$$('#' + list.id).selectedValues;
 
-                _.forEach(this.filterList, function(list, i) {
-                    var tmp = self.$$('#' + list.id).selectedValues;
+                        _.forEach(_.difference(tmp, list.appliedValues), function (item) {
+                            self.push('filterList.' + i + '.appliedValues', item);
+                        });
 
-                    _.forEach(_.difference(tmp, list.appliedValues), function (item) {
-                        self.push('filterList.' + i + '.appliedValues', item);
+                        _.forEach(_.difference(list.appliedValues, tmp), function (item) {
+                            self.splice('filterList.' + i + '.appliedValues', _.findIndex(list.appliedValues, function(o) { return o === item; }), 1);
+                        });
+
                     });
-
-                    _.forEach(_.difference(list.appliedValues, tmp), function (item) {
-                        self.splice('filterList.' + i + '.appliedValues', _.findIndex(list.appliedValues, function(o) { return o === item; }), 1);
-                    });
-
-                });
-
-                this.closeFilters();
-                this.fire('kick', {kicked: true});
+                    this.closeFilters();
+                    this.fire('kick', {kicked: true});
+                // });
             }
 
             cancelApply() {
