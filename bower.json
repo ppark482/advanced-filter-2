@@ -5,14 +5,14 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#^2.0.1",
-    "star-rating": "acordeonl/star-rating#^2.0.6",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
     "iron-selector": "PolymerElements/iron-selector#^2.0.0",
     "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.1",
     "paper-button": "PolymerElements/paper-button#^2.0.0",
     "iron-dropdown": "PolymerElements/iron-dropdown#^2.0.0",
     "lodash": "^4.17.4",
-    "iron-icons": "PolymerElements/iron-icons#^2.0.1"
+    "iron-icons": "PolymerElements/iron-icons#^2.0.1",
+    "l2t-paper-rating": "Link2Twenty/l2t-paper-rating#^1.2.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
