@@ -143,6 +143,11 @@
                 cursor: pointer;
             }
 
+            .checkbox-container > iron-selector {
+                @apply --layout-flex;
+                @apply --layout-vertical;
+            }
+
             #filterDropdownOpen {
                 width: 125px;
                 text-align: center;
@@ -235,6 +240,7 @@
                 -webkit-align-items: center;
                 align-items: center;
                 margin-left: 10px;
+                @apply --layout-horizontal;
             }
 
             #appliedFilters .listed-filters {
@@ -300,7 +306,7 @@
                     </div>
                 </div>
 
-                <div id="appliedFilters" style="@apply --layout-horizontal;">
+                <div id="appliedFilters">
                     <template id="appliedFiltersListInner" is="dom-repeat" items="{{filterList}}" as="list">
 
                         <template is="dom-repeat" items="{{list.appliedValues}}" as="selected" index-as="selected_no">
@@ -352,7 +358,7 @@
                             <template is="dom-if" if="[[filter.typeCheck]]">
                                 <div class="filter-wrap checkbox-container">
                                     <h4>[[filter.title]]</h4>
-                                    <iron-selector id="[[filter.id]]" multi="true" attr-for-selected="name" class="flex layout vertical">
+                                    <iron-selector id="[[filter.id]]" multi="true" attr-for-selected="name">
                                         <template is="dom-repeat" items="[[filter.list]]" as="listed" index-as="listed_no">
                                             <paper-checkbox name="[[listed]]">[[listed]]</paper-checkbox>
                                         </template>
